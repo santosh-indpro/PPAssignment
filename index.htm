@@ -1,1 +1,62 @@
-My Page
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Santosh Test</title>
+    <link href="css/style.css" rel="stylesheet">
+
+    <script type="text/javascript" src="js/utility.js"></script>
+    <script type="text/javascript" src="js/jsonpCall.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+
+</head>
+<body>
+<header>
+    <div class="searchH"><input type="text" placeholder="Search" id="txtSearch" onkeypress="return onKeyPress(event)"><input type="button" value="Search" onclick="onSearchClick(document.getElementById('txtSearch').value)"></div>
+</header>
+
+<section>
+    <div class="listHldr">
+        <ul id="content">
+        </ul>
+    </div>
+</section>
+
+<footer>
+    <div class="navH">
+        <a href="#" class="previous" id="btnPrevious" style="display:none" onclick="app.onPreviousClick()">Previous</a>
+        <a href="#" class="next" id="btnNext" style="display:none" onclick="app.onNextClick()">Next</a>
+    </div>
+</footer>
+</body>
+
+<script type="text/javascript" language="JavaScript">
+
+    //Initialised the application controller
+    var app = new application("btnPrevious", "btnNext", "content");
+    var accessToken = "447666115425084|fO_ZAUGlVVpx3L8dhglwkI5DZcY";
+
+    function callback(data){
+        app.callbackFunction(data);
+    };
+
+    function onItemMoreClick(element){
+        app.onMoreClick(element.getAttribute('pageId'));
+    };
+
+    function onSearchClick(searchText){
+        app.initiateCall('https://graph.facebook.com/search?q={0}&type=page&access_token={1}'.format("{0}", accessToken), searchText);
+    };
+
+    function onKeyPress(e) {
+        if (e.keyCode == 13) {
+            onSearchClick(document.getElementById('txtSearch').value)
+            return false;
+        }
+    }
+
+</script>
+</html>
